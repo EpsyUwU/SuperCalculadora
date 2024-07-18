@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clona el repositorio
-                git 'https://github.com/tu_usuario/tu_repositorio.git'
+                git 'https://github.com/EpsyUwU/SuperCalculadora.git'
             }
         }
         stage('Build Docker Image') {
