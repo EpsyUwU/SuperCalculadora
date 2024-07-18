@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clona el repositorio
-                git 'https://github.com/EpsyUwU/SuperCalculadora.git'
+                git url: 'https://github.com/EpsyUwU/SuperCalculadora.git', branch: 'main'
             }
         }
         stage('Build Docker Image') {
