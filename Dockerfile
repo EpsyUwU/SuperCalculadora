@@ -1,26 +1,22 @@
-# Usa una imagen base oficial de Node.js
-FROM node:14
+# Etapa de construcción
+FROM node:14 as builder
 
-# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el package.json y el package-lock.json
-COPY package*.json ./
-
-# Instala las dependencias
+# Instalar dependencias
+COPY package.json .
+COPY package-lock.json .
 RUN npm install
 
-# Copia el resto de la aplicación
+# Construir la aplicación
 COPY . .
-
-# Construir la aplicación para producción
 RUN npm run build
 
-# Usa una imagen base de servidor web
+# Etapa de producción
 FROM nginx:alpine
 
 # Copia los archivos de build al directorio de Nginx
-COPY --from=0 /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Expone el puerto en el que la aplicación estará corriendo
 EXPOSE 80
